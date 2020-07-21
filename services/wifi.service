@@ -1,0 +1,12 @@
+[Unit]
+Description=wifi fix
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=setpci -s 00:1d.1 0x50.B=0x40
+KillMode=process
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
