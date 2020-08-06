@@ -1,16 +1,6 @@
 #!/bin/bash
 
-LEGAJO=u44009
-USER=mestevez
-HOST=pablopc
-OCPID=/var/run/oc.pid
-SSHUPID=/var/run/sshuttle.pid
+f5fpc -s -u u44009 -t https://apm.afip.gob.ar
+watch -n 10 f5fpc --info
+f5fpc --stop
 
-sudo openconnect https://as.afip.gob.ar \
---protocol=nc \
---no-dtls \
---background \
---user=${LEGAJO} \
---pid-file=${OCPID}
-
-sshuttle --python /usr/bin/python2 --pidfile ${SSHUPID} -r ${USER}@${HOST} 0.0.0.0/0
