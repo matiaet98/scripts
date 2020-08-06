@@ -12,7 +12,7 @@ cat <<EOF>> /etc/bashrc
 
 export http_proxy=http://10.30.28.25:80
 export https_proxy=\$http_proxy
-export no_proxy=127.0.0.1
+export no_proxy=127.0.0.1,*.afip.gob.ar
 
 EOF
 
@@ -30,9 +30,17 @@ proxy=_none_
 
 EOF
 
+cat <<EOF>>/etc/yum.conf
+proxy=http://10.30.28.25:80
+EOF
+
 yum repolist
 yum update -y
-yum install -y docker
+
+yum install -y yum-utils
+yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+yum install -y docker-ce docker-ce-cli containerd.io
+
 curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 groupadd docker
@@ -51,4 +59,6 @@ EOF
 systemctl daemon-reload
 systemctl restart docker
 systemctl enable docker
+
+
 
