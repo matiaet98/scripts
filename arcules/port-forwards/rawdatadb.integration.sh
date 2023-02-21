@@ -5,5 +5,6 @@ pod=$(kubectl --context gke_arcules-rehersal_us-central1-b_cluster-bandpractice 
 kubectl \
 --context gke_arcules-rehersal_us-central1-b_cluster-bandpractice \
 --namespace integration \
+--address='0.0.0.0' \
 port-forward \
 ${pod} ${port}:5433
